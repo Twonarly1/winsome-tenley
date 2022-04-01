@@ -43,7 +43,7 @@ function NFTDropPage() {
           </h1>
           <div className="hidden md:flex md:space-x-2">
             {' '}
-            <Copy toCopy={address}></Copy>
+            {/* remove for deploy b/c it failed. <Copy toCopy={address}> */}
             <button
               onClick={() => (address ? disconnect() : connectWithMetamask())}
               className="rounded-full bg-gray-100 px-5 py-3 text-lg font-bold text-black hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 lg:px-5 lg:py-3 lg:text-xl"
