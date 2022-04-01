@@ -1,8 +1,5 @@
 import React from 'react'
 import router, { useRouter } from 'next/router'
-import WelcomeCard from './Welcome'
-import { Popover } from '@headlessui/react'
-import Link from 'next/link'
 
 const welcomes = {
   English: {
