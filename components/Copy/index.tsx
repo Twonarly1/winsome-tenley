@@ -9,7 +9,7 @@ export default function CopyHelper(props: {
 
   return (
     <button
-      className="text-left text-sm font-medium text-black"
+      className="mt-3 flex w-full items-center "
       onClick={() => setCopied(props.toCopy)}
     >
       {' '}
