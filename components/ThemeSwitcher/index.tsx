@@ -21,8 +21,7 @@ export const ThemeSwitcher = () => {
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
           role="img"
-          width="1.5em"
-          height="1.5em"
+          className="h-9 w-9"
           preserveAspectRatio="xMidYMid meet"
           viewBox="0 0 24 24"
         >
@@ -36,8 +35,7 @@ export const ThemeSwitcher = () => {
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
           role="img"
-          width="1.5em"
-          height="1.5em"
+          className="h-9 w-9"
           preserveAspectRatio="xMidYMid meet"
           viewBox="0 0 16 16"
         >

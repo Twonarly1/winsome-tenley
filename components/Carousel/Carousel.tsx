@@ -5,7 +5,7 @@ import React from 'react'
 
 export const Carousel = () => {
   return (
-    <div className="carousel-center carousel rounded-box space-x-4 bg-neutral p-4 md:max-w-5xl lg:mx-auto ">
+    <div className="carousel-center carousel rounded-box space-x-4 bg-red-900 p-4 dark:bg-purple-50 md:max-w-5xl lg:mx-auto ">
       <div className="carousel-item w-56 object-cover lg:h-96 lg:w-80">
         <img src="/example/00.png" className="rounded-box" alt="loading.." />
       </div>

@@ -20,49 +20,52 @@ const Home = ({ collections }: Props) => {
   // You can switch out this provider with any wallet or provider setup you like.
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-7xl flex-col bg-[#dddddd] p-4 px-10 text-black dark:bg-[#272727] dark:text-white 2xl:px-0">
+    <div className="mx-auto flex min-h-screen w-full flex-col bg-[#dddddd] p-4 px-10 text-black dark:bg-[#272727] dark:text-white 2xl:px-0">
       <Head>
         <title>Winsome Tenley</title>
         <link rel="icon" href="/two.png" />
       </Head>{' '}
-      <Carousel />
+      <div className="p-">
+        <Carousel />
+      </div>
       <div className="text-center text-lg font-bold">
         <div className="mx-auto mt-2 items-center text-6xl lg:text-6xl">
-          <span className="text-2xl text-red-900">
-            Choose a collection to mint from.
+          <span className="text-2xl tracking-widest text-red-900 dark:text-purple-100">
+            Choose a collection to mint from below.
           </span>
-          <div className="flex-grow border-t border-gray-400 p-1"></div>
-          THE WINSOME TENLEY
+          <div className="flex-grow border-t border-red-900 p-1 dark:border-purple-100  dark:font-extralight"></div>
+          <span className="">THE WINSOME TENLEY</span>
         </div>
       </div>
       <div className="p-4 lg:p-8">
         {' '}
-        <main className="mt-10 bg-slate-100 p-10 shadow-xl shadow-red-900">
-          <div className="grid space-x-3 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-            {collections.map((collection, i) => (
-              <Link key={i} href={`/nft/${collection.slug.current}`}>
+        <div className="grid md:p-4 lg:grid-cols-3 lg:space-x-16 2xl:grid-cols-3 2xl:p-12">
+          {collections.map((collection, i) => (
+            <Link key={i} href={`/nft/${collection.slug.current}`}>
+              <div className="mt-10 bg-slate-100 shadow-xl shadow-red-900 ">
                 <div
                   key={i}
-                  className="mt-4 flex cursor-pointer flex-col items-center  transition-all duration-200 hover:scale-105"
+                  className="flex cursor-pointer flex-col items-center "
                 >
                   <img
-                    className="h-40 w-80 rounded-2xl object-cover shadow-xl shadow-purple-50 md:h-96 md:w-60"
+                    className="h-40 w-full object-cover shadow-xl shadow-purple-50 transition-all duration-200 hover:scale-105 md:h-96 md:w-full"
                     src={urlFor(collection.mainImage).url()}
                     alt=""
                   />
-                  <div>
-                    <h2 className="mt-4 text-center text-3xl">
+                  <div className="mb-2 mt-4">
+                    <h2 className="text-overflow overflow-hidden text-center text-3xl">
                       {collection.title}
                     </h2>
-                    <p className="items-center text-center text-sm text-red-900">
+                    <p className="text-overflow items-center overflow-hidden text-center text-sm text-red-900">
                       {collection.description}
                     </p>
                   </div>
                 </div>
-              </Link>
-            ))}
-          </div>
-        </main>
+              </div>
+            </Link>
+            //
+          ))}
+        </div>
       </div>
     </div>
   )
