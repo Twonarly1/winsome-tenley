@@ -1,77 +1,104 @@
-import { Popover } from '@headlessui/react'
-import type { NextPage } from 'next'
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @next/next/link-passhref */
+import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { Carousel } from '../components/Carousel/Carousel'
 import Locales from '../components/Locales'
+import { sanityClient, urlFor } from '../sanity'
+import { Collection, unclaimedNFTs } from '../typings'
 
-const Home: NextPage = () => {
+interface Props {
+  collections: Collection[]
+  unclaimedNFTs: unclaimedNFTs[]
+}
+
+const Home = ({ collections }: Props) => {
   const { asPath } = useRouter()
 
+  // You can switch out this provider with any wallet or provider setup you like.
+
   return (
-    <div>
+    <div className="mx-auto flex min-h-screen max-w-7xl flex-col py-20 px-10 2xl:px-0">
       <Head>
-        <title>NFT Drop</title>
+        <title>Winsome Tenley</title>
         <link rel="icon" href="/two.png" />
       </Head>{' '}
-      <div className="mt-40 text-center text-lg font-bold">
-        <div className="mx-auto mt-8 items-center text-6xl lg:text-6xl">
-          <Locales />
+      <Carousel />
+      <div className="text-center text-lg font-bold">
+        <div className="mx-auto mt-20 items-center text-6xl lg:text-6xl">
+          <span className="text-2xl text-red-900">
+            Choose a collection to mint from.
+          </span>
+          <div className="flex-grow border-t border-gray-400 p-1"></div>
+          THE WINSOME TENLEY
         </div>
-        <Popover className="mt-16">
-          <Popover.Button>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-              role="img"
-              className=" h-16"
-              preserveAspectRatio="xMidYMid meet"
-              viewBox="0 0 32 32"
-            >
-              <path
-                fill="currentColor"
-                d="M18 19h6v2h-6zm0-4h12v2H18zm0-4h12v2H18zm-4 10v-2H9v-2H7v2H2v2h8.215a8.591 8.591 0 0 1-2.216 3.977A9.273 9.273 0 0 1 6.552 23H4.333a10.855 10.855 0 0 0 2.145 3.297A14.658 14.658 0 0 1 3 28.127L3.702 30a16.42 16.42 0 0 0 4.29-2.336A16.488 16.488 0 0 0 12.299 30L13 28.127A14.664 14.664 0 0 1 9.523 26.3a10.313 10.313 0 0 0 2.729-5.3zm-2.833-8h2.166L8.75 2H6.583L2 13h2.166L5 11h5.333zM5.833 9l1.833-4.4L9.5 9z"
-              />
-            </svg>
-          </Popover.Button>
-          <Popover.Panel className="">
-            <div className="flex flex-col space-x-4 text-black underline">
-              <Link href={asPath} locale="Español">
-                <span className="cursor-pointer font-light no-underline">
-                  Español
-                </span>
-              </Link>
-              <Link href={asPath} locale="English">
-                <span className="cursor-pointer font-light no-underline">
-                  English
-                </span>
-              </Link>
-              <Link href={asPath} locale="Français">
-                <span className="cursor-pointer font-light no-underline">
-                  Français
-                </span>
-              </Link>
-              <Link href={asPath} locale="Português">
-                <span className="cursor-pointer font-light no-underline">
-                  Português
-                </span>
-              </Link>
-              <Link href={asPath} locale="русский">
-                <span className="cursor-pointer font-light no-underline">
-                  русский
-                </span>
-              </Link>{' '}
-              <Link href={asPath} locale="日本">
-                <span className="cursor-pointer font-light no-underline">
-                  日本
-                </span>
-              </Link>
-            </div>
-          </Popover.Panel>
-        </Popover>{' '}
       </div>
+      <main className="mt-20 bg-slate-100 p-10 shadow-xl shadow-red-900">
+        <div className="grid space-x-3 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+          {collections.map((collection, i) => (
+            <Link key={i} href={`/nft/${collection.slug.current}`}>
+              <div
+                key={i}
+                className="mt-4 flex cursor-pointer flex-col items-center  transition-all duration-200 hover:scale-105"
+              >
+                <img
+                  className="h-40 w-80 rounded-2xl object-cover md:h-96 md:w-60"
+                  src={urlFor(collection.mainImage).url()}
+                  alt=""
+                />
+                <div>
+                  <h2 className="mt-4 text-center text-3xl">
+                    {collection.title}
+                  </h2>
+                  <p className="items-center text-center text-sm text-red-900">
+                    {collection.description}
+                  </p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </main>
     </div>
   )
 }
 
 export default Home
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const query = `*[_type == "collection"]{
+      _id,
+      title,
+      address,
+      description,
+      nftCollectionName,
+      mainImage {
+        asset
+      },
+      previewImage {
+        asset
+      },
+      slug {
+        current
+      },
+      creator-> {
+        _id,
+        name,
+        address,
+        slug {
+          current
+      },
+    },
+  }`
+
+  const collections = await sanityClient.fetch(query)
+  console.log(collections)
+
+  return {
+    props: {
+      collections,
+    },
+  }
+}
