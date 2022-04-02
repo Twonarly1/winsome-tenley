@@ -3,12 +3,16 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
-      backgroundImage: {
-        'bg-pattern': "url('/publiic/bg.jpeg')",
+      colors: {
+        'primary-dark': '#272727',
+        'secondary-dark': '#1c1c1c',
+        'primary-light': '#dddddd',
+        'primary-green': '#64c64e',
       },
     },
   },
-  plugins: [require('daisyui')],
+  plugins: [require('daisyui'), require('prettier-plugin-tailwindcss')],
 }
