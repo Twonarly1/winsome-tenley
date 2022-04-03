@@ -37,7 +37,7 @@ export function Identicon() {
     <div className="">
       {ensData && fetchable ? (
         <img
-          className="h-5 w-5 items-center rounded-full"
+          className="h-7 w-7 items-center rounded-full"
           alt="avatar"
           src={ensData}
         ></img>
