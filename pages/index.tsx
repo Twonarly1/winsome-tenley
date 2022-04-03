@@ -1,11 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @next/next/link-passhref */
-import type { GetServerSideProps, NextPage } from 'next'
+import type { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Carousel } from '../components/Carousel/Carousel'
-import { ThemeSwitcher } from '../components/ThemeSwitcher'
 import { sanityClient, urlFor } from '../sanity'
 import { Collection, unclaimedNFTs } from '../typings'
 

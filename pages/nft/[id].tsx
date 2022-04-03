@@ -8,17 +8,14 @@ import {
   useMetamask,
   useNFTDrop,
 } from '@thirdweb-dev/react'
-//import Copy from '../../components/Copy'
-//import Identicon from '../../components/Identicon'
+import Identicon from '../../components/Identicon'
 import { GetServerSideProps } from 'next'
 import { sanityClient, urlFor } from '../../sanity'
 import { Collection } from '../../typings'
 import Link from 'next/link'
 import Clock from 'react-live-clock'
-import Copy from '../../components/Copy'
-import { Dialog, Tab, Transition } from '@headlessui/react'
+import { Dialog, Transition } from '@headlessui/react'
 import { BigNumber } from 'ethers/lib/ethers'
-import { ethers } from 'ethers'
 import toast, { Toaster } from 'react-hot-toast'
 import { ThemeSwitcher } from '../../components/ThemeSwitcher'
 
@@ -182,17 +179,23 @@ function NFTDropPage({ collection }: Props) {
           <div className="hidden md:flex md:space-x-4 lg:flex lg:space-x-4">
             <button
               onClick={() => (address ? disconnect() : connectWithMetamask())}
-              className="h-16 w-80 rounded-full bg-purple-100 font-bold text-black hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 dark:bg-gray-100 dark:hover:bg-purple-200 md:w-52"
+              className="h-16 w-80 rounded-full bg-purple-100 font-bold text-black hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 dark:bg-gray-100 dark:hover:bg-purple-200 md:w-60"
             >
               <div className="w-full items-center text-3xl tracking-widest md:text-xl">
-                {' '}
-                {address ? (
-                  address.substring(0, 5) +
-                  '...' +
-                  address.substring(address.length - 5)
-                ) : (
-                  <span className="w-full items-center">Connect</span>
-                )}{' '}
+                <div className="flex items-center">
+                  {' '}
+                  <div className="mt-1 ml-2 px-3">
+                    {' '}
+                    <Identicon />{' '}
+                  </div>
+                  {address ? (
+                    address.substring(0, 5) +
+                    '...' +
+                    address.substring(address.length - 5)
+                  ) : (
+                    <span className="w-full items-center">Connect</span>
+                  )}{' '}
+                </div>
               </div>
             </button>
             <div className="flex md:mt-3">
@@ -206,17 +209,23 @@ function NFTDropPage({ collection }: Props) {
           <div className="flex justify-between space-x-4 md:hidden lg:hidden">
             <button
               onClick={() => (address ? disconnect() : connectWithMetamask())}
-              className="h-16 w-80 rounded-full bg-purple-100 font-bold text-black hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 dark:bg-gray-100 dark:hover:bg-purple-200 md:w-52"
+              className="h-16 w-80 rounded-full bg-purple-100 font-medium text-black hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 dark:bg-gray-100 dark:hover:bg-purple-200 md:w-52"
             >
-              <div className="w-full items-center text-3xl tracking-widest md:text-xl">
-                {' '}
-                {address ? (
-                  address.substring(0, 5) +
-                  '...' +
-                  address.substring(address.length - 5)
-                ) : (
-                  <span className="w-full items-center">Connect</span>
-                )}{' '}
+              {' '}
+              <div className="w-full items-center text-3xl tracking-wider md:text-xl">
+                <div className="flex items-center">
+                  {' '}
+                  <div className="ml-3 px-3">
+                    <Identicon />
+                  </div>{' '}
+                  {address ? (
+                    address.substring(0, 5) +
+                    '...' +
+                    address.substring(address.length - 5)
+                  ) : (
+                    <span className="w-full items-center">Connect</span>
+                  )}{' '}
+                </div>
               </div>
             </button>{' '}
             <div className="mt-3 flex">
@@ -340,6 +349,9 @@ function NFTDropPage({ collection }: Props) {
           >
             Account
           </a>
+          <div className="cursor-default text-gray-600 hover:text-red-900 dark:text-gray-300 dark:hover:text-purple-100">
+            UTC <Clock format={'HH:mm:ss'} ticking={true} timezone={'UTC'} />
+          </div>
         </div>
         {/* Mint Button */}
         <div className="p-4">
