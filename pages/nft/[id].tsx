@@ -16,7 +16,7 @@ import { Collection } from '../../typings'
 import Link from 'next/link'
 import Clock from 'react-live-clock'
 import Copy from '../../components/Copy'
-import { Tab } from '@headlessui/react'
+import { Dialog, Tab, Transition } from '@headlessui/react'
 import { BigNumber } from 'ethers/lib/ethers'
 import { ethers } from 'ethers'
 import toast, { Toaster } from 'react-hot-toast'
@@ -30,8 +30,9 @@ function NFTDropPage({ collection }: Props) {
   const [claimedSupply, setClaimedSupply] = useState<number>(0)
   const [totalSupply, setTotalSupply] = useState<BigNumber>()
   const [priceInEth, setPriceInEth] = useState<string>()
+  const [quantity, setQuantity] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(true)
-  const contractaddress = '0xd9c5C9c42CD64beEf594408FBF15A4646Dc82DA9'
+  let [isOpen, setIsOpen] = useState(false)
   const nftDrop = useNFTDrop('0xd9c5C9c42CD64beEf594408FBF15A4646Dc82DA9')
 
   // Auth
@@ -40,6 +41,14 @@ function NFTDropPage({ collection }: Props) {
   const disconnect = useDisconnect()
 
   const leftToClaim = Number(totalSupply?.toString()) - claimedSupply
+
+  function closeModal() {
+    setIsOpen(false)
+  }
+
+  function openModal() {
+    setIsOpen(true)
+  }
 
   useEffect(() => {
     const fetchPrice = async () => {
@@ -67,10 +76,17 @@ function NFTDropPage({ collection }: Props) {
     fetchNFTDropData()
   }, [nftDrop])
 
-  const mintNft = () => {
-    if (!nftDrop || !address) return
+  const handleChange = (number: any) => {
+    setQuantity(number)
+  }
 
-    const quantity = 1
+  const submitMint = (quantity: number) => {
+    mintNft(quantity)
+    setIsOpen(false)
+  }
+
+  const mintNft = (quantity: number) => {
+    if (!nftDrop || !address) return
 
     setLoading(true)
     const notification = toast.loading('Minting...', {
@@ -160,7 +176,6 @@ function NFTDropPage({ collection }: Props) {
                 <span className="px-2 font-extrabold dark:text-purple-100">
                   Winsome Tenley
                 </span>
-                NFT Market Place
               </div>
             </h1>
           </Link>
@@ -189,13 +204,6 @@ function NFTDropPage({ collection }: Props) {
         {/* Content */}
         <div className=" flex flex-1 flex-col items-center space-y-6 text-center">
           <div className="flex justify-between space-x-4 md:hidden lg:hidden">
-            {address ? (
-              <div className="mt-1">
-                <Copy toCopy={address} />
-              </div>
-            ) : (
-              ''
-            )}
             <button
               onClick={() => (address ? disconnect() : connectWithMetamask())}
               className="h-16 w-80 rounded-full bg-purple-100 font-bold text-black hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 dark:bg-gray-100 dark:hover:bg-purple-200 md:w-52"
@@ -215,7 +223,7 @@ function NFTDropPage({ collection }: Props) {
               <ThemeSwitcher />
             </div>
           </div>
-          <div className="font-medium text-gray-600 dark:text-gray-300 lg:text-xl lg:font-extrabold">
+          <div className="font-bold text-gray-600 dark:text-gray-300 md:font-extrabold lg:text-xl lg:font-extrabold">
             <div className="mx-auto mt-12 mb-4 items-center text-6xl  text-red-900 dark:text-purple-200 lg:text-center lg:text-6xl">
               <span className=""> {collection.nftCollectionName} </span>
             </div>
@@ -223,7 +231,6 @@ function NFTDropPage({ collection }: Props) {
               {collection.description}
             </div>
           </div>
-
           <div className="mx-auto  items-center">
             <div className=" mt-12 space-y-2 font-light">
               {loading ? (
@@ -243,6 +250,74 @@ function NFTDropPage({ collection }: Props) {
               )}
             </div>
           </div>
+
+          <>
+            <Transition appear show={isOpen} as={Fragment}>
+              <Dialog
+                as="div"
+                className="fixed inset-0 z-10 overflow-y-auto"
+                onClose={closeModal}
+              >
+                <div className="min-h-screen  px-4 text-center">
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-80" />
+                  </Transition.Child>
+
+                  {/* This element is to trick the browser into centering the modal contents. */}
+                  <span
+                    className="inline-block h-screen align-middle"
+                    aria-hidden="true"
+                  >
+                    &#8203;
+                  </span>
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0 scale-95"
+                    enterTo="opacity-100 scale-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100 scale-100"
+                    leaveTo="opacity-0 scale-95"
+                  >
+                    <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-primary-light p-6 text-left align-middle text-black shadow-xl transition-all dark:bg-secondary-dark dark:text-white">
+                      <Dialog.Title
+                        as="h3"
+                        className="text-center text-xl font-medium leading-6 text-red-900 dark:text-gray-300"
+                      >
+                        Enter the amount you want to mint.
+                      </Dialog.Title>
+
+                      <div className="relative mt-4 p-4 text-center">
+                        <input
+                          className="max-w-sm rounded border border-red-900 bg-slate-100 px-4 py-2 text-center shadow-md shadow-red-900 dark:border-purple-100 dark:bg-gray-300 dark:text-black dark:shadow-purple-100"
+                          type="number"
+                          placeholder="0"
+                          onChange={(e) => handleChange(e.target.value)}
+                        />
+                      </div>
+                      <div className="mt-4 p-4">
+                        <button
+                          type="button"
+                          className="text-widest w-full rounded border border-red-900 bg-slate-100 px-4 py-2 font-bold tracking-widest text-red-900 dark:bg-purple-100 dark:text-black"
+                          onClick={() => submitMint(quantity)}
+                        >
+                          MINT
+                        </button>
+                      </div>
+                    </div>
+                  </Transition.Child>
+                </div>
+              </Dialog>
+            </Transition>
+          </>
         </div>
         <div className="flex items-center justify-center space-x-4 text-lg">
           <a
@@ -270,7 +345,8 @@ function NFTDropPage({ collection }: Props) {
         <div className="p-4">
           {' '}
           <button
-            onClick={mintNft}
+            // onClick={() => mintNft(quantity)}
+            onClick={openModal}
             disabled={
               loading || claimedSupply === totalSupply?.toNumber() || !address
             }
@@ -281,7 +357,7 @@ function NFTDropPage({ collection }: Props) {
             ) : claimedSupply === totalSupply?.toNumber() ? (
               <>SOLD OUT</>
             ) : !address ? (
-              <>Sign in to Mint</>
+              <p className="text-xl">Connect wallet to Mint</p>
             ) : (
               <span className="font-bold"> Mint NFT ({priceInEth}) ETH</span>
             )}
