@@ -258,7 +258,7 @@ function NFTDropPage({ collection }: Props) {
                 className="fixed inset-0 z-10 overflow-y-auto"
                 onClose={closeModal}
               >
-                <div className="min-h-screen px-4 text-center">
+                <div className="min-h-screen  px-4 text-center">
                   <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -268,7 +268,7 @@ function NFTDropPage({ collection }: Props) {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                   >
-                    <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-50" />
+                    <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-80" />
                   </Transition.Child>
 
                   {/* This element is to trick the browser into centering the modal contents. */}
@@ -290,26 +290,26 @@ function NFTDropPage({ collection }: Props) {
                     <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-primary-light p-6 text-left align-middle text-black shadow-xl transition-all dark:bg-secondary-dark dark:text-white">
                       <Dialog.Title
                         as="h3"
-                        className="text-lg font-medium leading-6"
+                        className="text-center text-xl font-medium leading-6 text-red-900 dark:text-gray-300"
                       >
-                        The amount you want to Mint?
+                        Enter the amount you want to mint.
                       </Dialog.Title>
 
-                      <div className="relative mt-4">
+                      <div className="relative mt-4 p-4 text-center">
                         <input
-                          className="max-w-sm rounded border border-red-900 bg-slate-100 px-4 py-2 shadow-md shadow-red-900 dark:border-purple-100 dark:bg-gray-300 dark:text-black dark:shadow-purple-100"
+                          className="max-w-sm rounded border border-red-900 bg-slate-100 px-4 py-2 text-center shadow-md shadow-red-900 dark:border-purple-100 dark:bg-gray-300 dark:text-black dark:shadow-purple-100"
                           type="number"
-                          placeholder="Amount to mint."
+                          placeholder="0"
                           onChange={(e) => handleChange(e.target.value)}
                         />
                       </div>
-                      <div className="mt-4">
+                      <div className="mt-4 p-4">
                         <button
                           type="button"
-                          className="inline-flex justify-center rounded-md border border-transparent bg-primary-green px-4 py-2 text-sm font-medium text-white hover:bg-opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-green focus-visible:ring-offset-2"
+                          className="text-widest w-full rounded border border-red-900 bg-slate-100 px-4 py-2 font-bold tracking-widest text-red-900 dark:bg-purple-100 dark:text-black"
                           onClick={() => submitMint(quantity)}
                         >
-                          Mint
+                          MINT
                         </button>
                       </div>
                     </div>
