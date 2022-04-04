@@ -9,11 +9,11 @@ export const Button = () => {
   return (
     <div className="group relative">
       <div className="animate-tilt group-hover:duration-600 absolute -inset-0.5 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 opacity-30 blur transition duration-1000 group-hover:opacity-100"></div>
-      <div className="relative flex items-center space-x-4 divide-gray-600 rounded-full  bg-white p-4 leading-none text-red-900 transition duration-200 hover:text-purple-500 dark:bg-slate-600 dark:text-blue-200 dark:hover:text-purple-300">
+      <div className="relative flex items-center space-x-4 divide-gray-600 rounded-full  bg-white  leading-none text-red-900 transition duration-200 hover:text-purple-500 dark:bg-slate-600 dark:text-blue-200 dark:hover:text-purple-300">
         <button
           onClick={() => (address ? disconnect() : connectWithMetamask())}
         >
-          <div className="w-full items-center space-x-2 text-2xl tracking-wider md:text-3xl">
+          <div className="w-full items-center px-4 py-2 text-xl tracking-wider">
             {address ? (
               address.substring(0, 5) +
               '...' +

@@ -13,7 +13,6 @@ import { BigNumber } from 'ethers/lib/ethers'
 import toast, { Toaster } from 'react-hot-toast'
 import { Header } from '../../components/Header'
 import Image from 'next/image'
-import { Footer } from '../../components/Footer'
 
 interface Props {
   collection: Collection
@@ -138,61 +137,50 @@ function NFTDropPage({ collection }: Props) {
       <Header />
 
       {/* Content */}
-      <div className="flex flex-1 flex-col items-center space-y-6 text-center">
-        <div className="flex flex-1 flex-col bg-slate-100 p-6 text-black dark:bg-[#272727] dark:text-white">
+      <div className="flex flex-1 flex-col items-center text-center">
+        <div className="mt-6 flex flex-1 flex-col bg-slate-100 px-12 text-black dark:bg-[#272727] dark:text-white">
           <div className="font-bold text-gray-600 dark:text-gray-300 md:font-extrabold ">
-            <div className="mx-auto items-center text-4xl  text-gray-600 dark:font-medium dark:text-gray-300 lg:text-center lg:text-5xl">
+            <div className="mx-auto text-4xl text-gray-600 dark:font-medium dark:text-gray-300">
               {collection.nftCollectionName}
             </div>
-            <div className="mb-6 text-lg font-light tracking-wider text-gray-600 dark:text-gray-300 ">
+            <div className="mb-4 text-lg font-light tracking-wider text-gray-600 dark:text-gray-300 ">
               {collection.description}
             </div>
           </div>
-
           <div className="px-12">
-            {' '}
             <div className="group relative cursor-pointer transition duration-500 ease-in-out hover:rotate-1 hover:scale-105">
               <div className="animate-tilt group-hover:duration-600 absolute -inset-0.5 rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 opacity-30 blur transition duration-1000 group-hover:opacity-80"></div>{' '}
-              <div className="relative items-center justify-between rounded-xl bg-white object-cover p-2 leading-none transition duration-200 hover:text-red-900 dark:bg-slate-600 dark:hover:text-purple-200">
+              <div className="relative justify-between rounded-xl bg-white object-cover p-2 leading-none transition duration-200 hover:text-red-900 dark:bg-slate-600 dark:hover:text-purple-200">
                 <Image
                   src={urlFor(collection.previewImage).url()}
                   width={400}
                   height={400}
-                  layout="responsive"
-                  alt="bayc"
+                  alt=""
                   className="rounded-lg pt-2"
                 />
-                <div className="text-overflow overflow-hidden p-2 text-center text-3xl">
-                  {collection.title}
-                  <p className="text-overflow items-center overflow-hidden text-center text-sm ">
-                    {collection.nftCollectionName}
-                  </p>
-                </div>
               </div>
             </div>
           </div>
-
-          <div className="mx-auto mt-6 animate-pulse items-center space-y-2 font-light">
-            {loading ? (
-              <p className="text-2xl font-medium ">loading Supply Count... </p>
-            ) : (
-              <div>
-                {' '}
-                <p className="text-2xl font-medium text-red-900 dark:text-purple-200 ">
+          <div className="mx-auto mt-6 space-y-6">
+            <div className="animate-pulse text-2xl font-medium text-gray-600 dark:text-gray-300">
+              {loading ? (
+                <p>loading Supply Count... </p>
+              ) : (
+                <div className="font-medium text-red-900 dark:text-purple-200 ">
                   {leftToClaim} /{totalSupply?.toString()} Remaining
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* Mint Button */}
-          <div className="mt-12">
-            {' '}
+                </div>
+              )}
+            </div>
+            <div className="text-gray-600 dark:text-gray-300">
+              {' '}
+              Mint Fee: {priceInEth}
+            </div>
             <div className="group relative">
               <div className="animate-tilt group-hover:duration-600 absolute -inset-0.5 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 opacity-30 blur transition duration-1000 group-hover:opacity-100"></div>
-              <div className="relative flex items-center space-x-4 divide-gray-600 rounded-full  bg-white p-4 leading-none text-red-900 transition duration-200 hover:text-purple-500 dark:bg-slate-600 dark:text-blue-200 dark:hover:text-purple-300">
+              <div className="relative divide-gray-600 rounded-full bg-white p-2 leading-none text-red-900 transition duration-200 hover:text-purple-500 dark:bg-slate-600 dark:text-blue-200 dark:hover:text-purple-300">
+                {' '}
                 <button
-                  className="mx-auto "
+                  className="text-xl tracking-widest"
                   onClick={openModal}
                   disabled={
                     loading ||
@@ -205,27 +193,17 @@ function NFTDropPage({ collection }: Props) {
                   ) : claimedSupply === totalSupply?.toNumber() ? (
                     <>SOLD OUT</>
                   ) : !address ? (
-                    <p className="text-xl">
-                      <button
-                        onClick={() =>
-                          address ? disconnect() : connectWithMetamask()
-                        }
-                      >
-                        <div className="w-full items-center space-x-2 text-2xl tracking-wider md:text-3xl">
-                          {address ? (
-                            ''
-                          ) : (
-                            <span className="w-full items-center">
-                              Connect to Mint
-                            </span>
-                          )}
-                        </div>
-                      </button>
-                    </p>
+                    <button
+                      onClick={() =>
+                        address ? disconnect() : connectWithMetamask()
+                      }
+                    >
+                      {address ? '' : 'Connect'}
+                    </button>
                   ) : (
-                    <span className="py-2 px-4 text-2xl font-bold tracking-wider text-red-900 transition duration-200 hover:text-purple-500  dark:text-blue-200 dark:hover:text-purple-300 md:text-3xl">
+                    <span className="py-2 px-4 uppercase text-red-900 transition duration-200 hover:text-purple-500  dark:text-blue-200 dark:hover:text-purple-300">
                       {' '}
-                      Mint NFT / {priceInEth} ETH
+                      Mint
                     </span>
                   )}
                 </button>
@@ -233,76 +211,77 @@ function NFTDropPage({ collection }: Props) {
             </div>
           </div>
         </div>
+        <footer className="bg-slate-100 py-4 text-center text-sm font-light uppercase tracking-widest dark:bg-primary-dark">
+          <span className="text-slate-600 dark:text-gray-300">
+            Designed by twonarly
+          </span>
+        </footer>
       </div>
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="fixed inset-0 z-10 overflow-y-auto"
+          onClose={closeModal}
+        >
+          <div className="min-h-screen  px-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-80" />
+            </Transition.Child>
 
-      <>
-        <Transition appear show={isOpen} as={Fragment}>
-          <Dialog
-            as="div"
-            className="fixed inset-0 z-10 overflow-y-auto"
-            onClose={closeModal}
-          >
-            <div className="min-h-screen  px-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-80" />
-              </Transition.Child>
+            {/* This element is to trick the browser into centering the modal contents. */}
+            <span
+              className="inline-block h-screen align-middle"
+              aria-hidden="true"
+            >
+              &#8203;
+            </span>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-primary-light p-6 text-left align-middle text-black shadow-xl transition-all dark:bg-secondary-dark dark:text-white">
+                <Dialog.Title
+                  as="h3"
+                  className="text-center text-xl font-medium leading-6 text-red-900 dark:text-gray-300"
+                >
+                  Enter the amount you want to mint.
+                </Dialog.Title>
 
-              {/* This element is to trick the browser into centering the modal contents. */}
-              <span
-                className="inline-block h-screen align-middle"
-                aria-hidden="true"
-              >
-                &#8203;
-              </span>
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-primary-light p-6 text-left align-middle text-black shadow-xl transition-all dark:bg-secondary-dark dark:text-white">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-center text-xl font-medium leading-6 text-red-900 dark:text-gray-300"
-                  >
-                    Enter the amount you want to mint.
-                  </Dialog.Title>
-
-                  <div className="relative mt-4 p-4 text-center">
-                    <input
-                      className="max-w-sm rounded border border-red-900 bg-slate-100 px-4 py-2 text-center shadow-md shadow-red-900 hover:scale-105 dark:border-purple-100 dark:bg-gray-300 dark:text-black dark:shadow-purple-100"
-                      type="number"
-                      placeholder="0"
-                      onChange={(e) => handleChange(e.target.value)}
-                    />
-                  </div>
-                  <div className="mt-4 p-4">
-                    <button
-                      type="button"
-                      className="text-widest hover: w-full rounded border border-red-900 bg-slate-100 px-4 py-2 font-bold tracking-widest text-red-900 hover:scale-105 dark:bg-purple-100 dark:text-black"
-                      onClick={() => submitMint(quantity)}
-                    >
-                      MINT
-                    </button>
-                  </div>
+                <div className="relative mt-4 p-4 text-center">
+                  <input
+                    className="max-w-sm rounded border border-red-900 bg-slate-100 px-4 py-2 text-center shadow-md shadow-red-900 hover:scale-105 dark:border-purple-100 dark:bg-gray-300 dark:text-black dark:shadow-purple-100"
+                    type="number"
+                    placeholder="0"
+                    onChange={(e) => handleChange(e.target.value)}
+                  />
                 </div>
-              </Transition.Child>
-            </div>
-          </Dialog>
-        </Transition>
-      </>
-      <Footer />
+                <div className="mt-4 p-4">
+                  <button
+                    type="button"
+                    className="text-widest hover: w-full rounded border border-red-900 bg-slate-100 px-4 py-2 font-bold tracking-widest text-red-900 hover:scale-105 dark:bg-purple-100 dark:text-black"
+                    onClick={() => submitMint(quantity)}
+                  >
+                    MINT
+                  </button>
+                </div>
+              </div>
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition>
     </div>
   )
 }

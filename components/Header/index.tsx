@@ -8,7 +8,7 @@ export const Header = () => {
   return (
     <div>
       {' '}
-      <div className="mx-auto h-20 w-full max-w-7xl items-center justify-between p-4 text-center">
+      <div className="mx-auto h-16 w-full max-w-7xl items-center justify-between p-4 text-center">
         <Link href="/">
           <div className="ml-2 mt-2 cursor-pointer items-center text-4xl font-extrabold dark:text-purple-100 ">
             <span className="text-2xl font-medium text-black dark:text-gray-300">
@@ -20,7 +20,7 @@ export const Header = () => {
       </div>
       <div className="mt-2 flex items-center">
         <div className="my-8 flex-grow border-t border-red-900 dark:border-purple-200"></div>
-        <span className="-mt-3 flex-shrink">
+        <span className="-mt-1 flex-shrink">
           <ThemeSwitcher />
         </span>
 
