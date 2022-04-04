@@ -11,7 +11,7 @@ https://thirdweb.com/dashboard
 
 terminal 1
 
-git clone https://github.com/Twonarly1/Winsome-Tenley
+- git clone https://github.com/Twonarly1/Winsome-Tenley
 
 cd Winsome-Tenley
 
