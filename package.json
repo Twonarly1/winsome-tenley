@@ -14,15 +14,12 @@
     "@thirdweb-dev/sdk": "^2.0.20",
     "daisyui": "^2.13.5",
     "ethers": "^5.6.2",
-    "moment-timezone": "^0.5.34",
     "next": "latest",
     "next-sanity": "^0.5.1",
     "next-themes": "^0.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hot-toast": "^2.2.0",
-    "react-live-clock": "^5.7.0",
-    "react-moment": "^1.1.1"
+    "react-hot-toast": "^2.2.0"
   },
   "devDependencies": {
     "@types/node": "17.0.4",

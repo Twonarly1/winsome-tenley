@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @next/next/link-passhref */
 import type { GetServerSideProps } from 'next'
-import Head from 'next/head'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { Carousel } from '../components/Carousel/Carousel'
+import { Footer } from '../components/Footer'
+import { ThemeSwitcher } from '../components/ThemeSwitcher'
 import { sanityClient, urlFor } from '../sanity'
 import { Collection, unclaimedNFTs } from '../typings'
 
@@ -14,59 +14,47 @@ interface Props {
 }
 
 const Home = ({ collections }: Props) => {
-  const { asPath } = useRouter()
-
-  // You can switch out this provider with any wallet or provider setup you like.
-
   return (
-    <div className="mx-auto flex min-h-screen w-full flex-col bg-[#dddddd] p-4 px-10 text-black dark:bg-[#272727] dark:text-white 2xl:px-0">
-      <Head>
-        <title>Winsome Tenley</title>
-        <link rel="icon" href="/two.png" />
-      </Head>{' '}
-      <div className="p-">
+    <>
+      <div className="min-h-screen bg-primary-light p-4 text-center dark:bg-primary-dark dark:text-gray-300">
         <Carousel />
-      </div>
-      <div className="text-center text-lg font-bold">
-        <div className="mx-auto mt-2 items-center text-6xl lg:text-6xl">
-          <span className="text-2xl tracking-widest text-red-900 dark:text-purple-100">
+        <div className="mt-12 flex-grow border-t border-red-900 p-1 dark:border-purple-200 "></div>
+
+        <div className="mx-auto mt-4 text-4xl font-medium tracking-wider text-red-900 dark:text-gray-300">
+          THE WINSOME TENLEY
+          <div className="mx-auto mt-4 w-80 text-lg dark:font-medium md:w-full">
             Choose a collection to mint from below.
-          </span>
-          <div className="flex-grow border-t border-red-900 p-1 dark:border-purple-100  dark:font-extralight"></div>
-          <span className="">THE WINSOME TENLEY</span>
+          </div>
         </div>
-      </div>
-      <div className="p-4 lg:p-8">
-        {' '}
-        <div className="grid md:p-4 lg:grid-cols-3 lg:space-x-16 2xl:grid-cols-3 2xl:p-12">
-          {collections.map((collection, i) => (
-            <Link key={i} href={`/nft/${collection.slug.current}`}>
-              <div className="mt-10 bg-slate-100 shadow-xl shadow-red-900 dark:shadow-purple-100 ">
-                <div
-                  key={i}
-                  className="flex cursor-pointer flex-col items-center "
-                >
+
+        <div className="-mt-12 grid gap-12 p-24 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+          {collections.map((collection, idx) => (
+            <Link key={idx} href={`/nft/${collection.slug.current}`}>
+              <div className="group relative cursor-pointer transition duration-500 ease-in-out hover:rotate-1 hover:scale-105">
+                <div className="animate-tilt group-hover:duration-600 absolute -inset-0.5 rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 opacity-30 blur transition duration-1000 group-hover:opacity-80"></div>
+                <div className="relative mx-auto items-center justify-between rounded-xl bg-white object-cover p-2 leading-none transition duration-200 hover:text-red-900 dark:bg-slate-600 dark:hover:text-purple-200">
                   <img
-                    className="h-40 w-full object-cover shadow-xl shadow-purple-50 transition-all duration-200 hover:scale-105 md:h-96 md:w-full"
-                    src={urlFor(collection.mainImage).url()}
+                    className="lg:w-38 h-auto flex-shrink rounded-2xl object-cover sm:w-full"
+                    src={urlFor(collection.previewImage).url()}
                     alt=""
                   />
-                  <div className="mb-2 mt-4">
-                    <h2 className="text-overflow overflow-hidden text-center text-3xl">
-                      {collection.title}
-                    </h2>
-                    <p className="text-overflow items-center overflow-hidden text-center text-sm text-red-900">
-                      {collection.description}
+                  <div className="text-overflow overflow-hidden p-2 text-center text-3xl">
+                    {collection.title}
+                    <p className="text-overflow items-center overflow-hidden text-center text-sm ">
+                      {collection.nftCollectionName}
                     </p>
                   </div>
                 </div>
               </div>
             </Link>
-            //
           ))}
         </div>
+        <Footer />
+        <div className="mb-2">
+          <ThemeSwitcher />
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
