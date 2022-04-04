@@ -27,8 +27,9 @@ terminal 2
 
 ```
 $ cd Winsome-Tenley
+$ touch .env
 $ code .
-  Change .env.example to .env and add environmental variables.
+Add your own environmental variables. See .env.example
 $ yarn dev
 ```
 
