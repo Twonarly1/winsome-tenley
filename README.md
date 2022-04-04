@@ -26,7 +26,7 @@ $ sanity start
 terminal 2
 
 ```
-$ gcd Winsome-Tenley
+$ cd Winsome-Tenley
 $ code .
 $ Add environmental variables.
 $ yarn dev
