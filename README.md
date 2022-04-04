@@ -1,4 +1,4 @@
-# Next.js + Tailwind + Sanity CMS, thirdweb
+# Next.js + Tailwind + Typescript + Sanity CMS + Web3 + thirdweb
 
 https://nextjs.org/learn/basics/create-nextjs-app
 
